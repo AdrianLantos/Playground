@@ -137,79 +137,40 @@ body {
   }
 }
 
-.spiral {
-  height: fit-content;
-  animation: spin 1.5s linear infinite;
-  margin-top: 10px;
-  margin-bottom: 10px;
-}
-
-.spiral img {
-  width: 30px;
-  height: auto;
-}
-
-/* rotates clockwise indefinitely */
-@keyframes spin {
-  to {
-    transform: rotateY(360deg);
-  }
-}
-
-/* visibility hidden means the item is still there and taking up space
-     but just not shown. display: none doesn't take up space */
 .hidden {
   visibility: hidden;
 }
 
-.info-bar {
+.keyboard-holder {
+  gap: 10px;
+  margin-top: 15px;
+}
+
+.keyboard-row {
   display: flex;
-  align-items: center;
   justify-content: center;
+  align-items: center;
+  max-width: 100%;
+  gap: 7px;
+  margin: 10px 0;
 }
 
-/* winner animation */
-
-@keyframes rainbow {
-  100%,
-  0% {
-    color: rgb(255, 0, 0);
-  }
-  8% {
-    color: rgb(255, 127, 0);
-  }
-  16% {
-    color: rgb(255, 255, 0);
-  }
-  25% {
-    color: rgb(127, 255, 0);
-  }
-  33% {
-    color: rgb(0, 255, 0);
-  }
-  41% {
-    color: rgb(0, 255, 127);
-  }
-  50% {
-    color: rgb(0, 255, 255);
-  }
-  58% {
-    color: rgb(0, 127, 255);
-  }
-  66% {
-    color: rgb(0, 0, 255);
-  }
-  75% {
-    color: rgb(127, 0, 255);
-  }
-  83% {
-    color: rgb(255, 0, 255);
-  }
-  91% {
-    color: rgb(255, 0, 127);
-  }
+.keyboard-row .keyboard-key {
+  background-color: #ffffff;
+  padding: 5px;
+  font-size: 20px;
+  border-radius: 5px;
+  border: 1px solid rgb(190, 189, 189);
 }
 
-.winner {
-  animation: rainbow 4s infinite linear;
+.keyboard-row .keyboard-key:hover {
+  cursor: pointer;
+}
+.keyboard-row .keyboard-key:active {
+  background-color: #ffffff1c;
+  border-color: rgb(158, 158, 158);
+}
+
+.keyboard-key.wrong {
+  background-color: #9b9b9b;
 }

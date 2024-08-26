@@ -35,8 +35,51 @@ function createLetterBoxes(answer, rounds) {
   }
 }
 
+function createKeyboard() {
+  let keyboard = document.querySelector(".keyboard-holder");
+  for (let i = 0; i < 3; i++) {
+    let newKeyRow = document.createElement("div");
+    newKeyRow.id = "keyboard-row-" + (i + 1);
+    newKeyRow.className = "keyboard-row";
+
+    for (let j = 0; j < 10; j++) {
+      if (i === 2 && j === 0) {
+        let newKey = document.createElement("div");
+        let charValue = "Enter";
+        newKey.innerHTML = charValue;
+        newKey.id = "key-" + charValue;
+        newKey.className = "keyboard-key";
+        newKeyRow.appendChild(newKey);
+      } else if (i === 2 && j >= 6) {
+        let newKey = document.createElement("div");
+        let charValue = "Del";
+        newKey.innerHTML = charValue;
+        newKey.id = "key-" + charValue;
+        newKey.className = "keyboard-key";
+        newKeyRow.appendChild(newKey);
+        break;
+      }
+      let newKey = document.createElement("div");
+      let charValue;
+      if (i === 2 && j === 0) {
+        charValue = "Enter";
+      } else if (i === 2 && j === 9) {
+        charValue = "Del";
+      }
+
+      charValue = String.fromCharCode(65 + 10 * i + j);
+      newKey.innerHTML = charValue;
+      newKey.id = "key-" + charValue;
+      newKey.className = "keyboard-key";
+      newKeyRow.appendChild(newKey);
+    }
+    keyboard.appendChild(newKeyRow);
+  }
+}
+
 // Sets the question and the number of boxes
 export function gameSetUp(question, answer, rounds) {
   document.querySelector(".question").innerHTML = question;
+  createKeyboard();
   createLetterBoxes(answer, rounds);
 }

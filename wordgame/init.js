@@ -4,8 +4,9 @@ import { gameSetUp, isLetter, mapNumberOfLetters } from "./util.js";
 async function init() {
   gameSetUp(QUESTION, ANSWER, ROUNDS);
 
-  const wordLetters = ANSWER.split("");
   const letters = document.querySelectorAll(".letterboard-letter");
+  const keyboardKeys = document.querySelectorAll(".keyboard-key");
+  const wordLetters = ANSWER.split("");
   let currentGuess = "";
   let currentRow = 0;
   let gameFinished = false;
@@ -74,6 +75,11 @@ async function init() {
       ) {
         letters[currentRow * ANSWER_LENGTH + i].classList.add("close");
         letterMap[guessLetters[i]]--;
+      } else {
+        let wrongLetter = document.querySelector(
+          "#key-" + letters[currentRow * ANSWER_LENGTH + i].innerText
+        );
+        wrongLetter.classList.add("wrong");
       }
     }
 
@@ -103,6 +109,20 @@ async function init() {
 
     letters[ANSWER_LENGTH * currentRow + currentGuess.length - 1].innerText =
       letter;
+  }
+
+  for (let i = 0; i < keyboardKeys.length; i++) {
+    let key = keyboardKeys[i];
+    key.addEventListener("click", function () {
+      if (gameFinished) return;
+      if (key.id.split("-")[1] === "Enter") {
+        guess();
+      } else if (key.id.split("-")[1] === "Del") {
+        erase();
+      } else {
+        addLetter(key.id.split("-")[1]);
+      }
+    });
   }
 
   document.addEventListener("keydown", function handleKeyPress(event) {
