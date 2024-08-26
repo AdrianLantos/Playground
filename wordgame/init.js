@@ -1,79 +1,16 @@
-const questionObjecst = [
-  { question: "What is the name of a sybirean dog breed?", answer: "husky" },
-  {
-    question:
-      "What dog breed holds the records for the longest toung of a dog?",
-    answer: "BOXER",
-  },
-  {
-    question:
-      "Name the cross breed of Yorkshire Terrier and Australian Terrier?",
-    answer: "SILKY",
-  },
-  {
-    question: "Long Word test?",
-    answer: "SILKYasdasd",
-  },
-];
-
-const loadingDiv = document.querySelector(".spiral");
-const ROUNDS = 5;
-const QUESTION_OBJ =
-  questionObjecst[Math.floor(Math.random() * questionObjecst.length)];
-const QUESTION = QUESTION_OBJ.question;
-const ANSWER = QUESTION_OBJ.answer.toUpperCase();
-const ANSWER_LENGTH = ANSWER.length;
-
-document.querySelector(".question").innerHTML = QUESTION;
-
-function isLetter(letter) {
-  return /^[a-zA-Z]$/.test(letter);
-}
-
-function mapNumberOfLetters(array) {
-  const obj = {};
-  for (let i = 0; i < array.length; i++) {
-    if (obj[array[i]]) {
-      obj[array[i]]++;
-    } else {
-      obj[array[i]] = 1;
-    }
-  }
-
-  return obj;
-}
-
-function createLetterBoxes() {
-  let letterBoard = document.querySelector(".letterboard");
-
-  for (let i = 0; i < ROUNDS; i++) {
-    let newRow = document.createElement("div");
-    newRow.className = "answer-row";
-    newRow.id = "round-" + i;
-    for (let i = 0; i < ANSWER_LENGTH; i++) {
-      let newDiv = document.createElement("div");
-      newDiv.className = "letterboard-letter";
-      newDiv.id =
-        "letter-" + (ANSWER_LENGTH * ROUNDS - (ANSWER_LENGTH * ROUNDS - i));
-      newRow.appendChild(newDiv);
-    }
-
-    letterBoard.appendChild(newRow);
-  }
-}
+import { ROUNDS, QUESTION, ANSWER, ANSWER_LENGTH } from "./constants.js";
+import { gameSetUp, isLetter, mapNumberOfLetters } from "./util.js";
 
 async function init() {
+  gameSetUp(QUESTION, ANSWER, ROUNDS);
+
+  const wordLetters = ANSWER.split("");
+  const letters = document.querySelectorAll(".letterboard-letter");
   let currentGuess = "";
   let currentRow = 0;
   let gameFinished = false;
 
-  //Create answer boxes depending o word length
-  createLetterBoxes();
-  let letters = document.querySelectorAll(".letterboard-letter");
-
-  const word = ANSWER;
-  const wordLetters = word.split("");
-
+  // Function Responsible for adding and removing the css animation class
   function markInvalidWord(_shake) {
     let applyShake = _shake || false;
     for (let i = 0; i < ANSWER_LENGTH; i++) {
@@ -117,7 +54,7 @@ async function init() {
     }
 
     // Game Won if guess is correct
-    if (currentGuess === word) {
+    if (currentGuess === ANSWER) {
       gameFinished = true;
       return;
     } else {

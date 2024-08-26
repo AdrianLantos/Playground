@@ -12,6 +12,6 @@ const questionObjecst = [
   },
 ];
 
-export async function getQuestionObj() {
-  return questionObjecst[Math.random(questionObjecst.length)];
+export default function getQuestionObj() {
+  return questionObjecst[Math.floor(Math.random() * questionObjecst.length)];
 }
