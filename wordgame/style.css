@@ -43,13 +43,25 @@ body {
 }
 
 .letterboard {
-  max-width: 295px;
+  max-width: 450px;
   width: 100%;
   margin: 10px auto;
-  display: grid;
-  grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
-  row-gap: 10px;
-  column-gap: 5px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+}
+
+.answer-row {
+  max-width: 100%;
+  display: flex;
+  flex-direction: row;
+  gap: 5px;
+}
+
+.answer-row div {
+  flex-shrink: 0.9;
 }
 
 .letterboard-letter {

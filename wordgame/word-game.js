@@ -1,8 +1,3 @@
-const letters = document.querySelectorAll(".letterboard-letter");
-const loadingDiv = document.querySelector(".spiral");
-const ANSWER_LENGTH = 5;
-const ROUNDS = 6;
-
 const questionObjecst = [
   { question: "What is the name of a sybirean dog breed?", answer: "husky" },
   {
@@ -15,11 +10,21 @@ const questionObjecst = [
       "Name the cross breed of Yorkshire Terrier and Australian Terrier?",
     answer: "SILKY",
   },
+  {
+    question: "Long Word test?",
+    answer: "SILKYasdasd",
+  },
 ];
 
-async function getQuestionObj() {
-  return questionObjecst[Math.floor(Math.random() * questionObjecst.length)];
-}
+const loadingDiv = document.querySelector(".spiral");
+const ROUNDS = 5;
+const QUESTION_OBJ =
+  questionObjecst[Math.floor(Math.random() * questionObjecst.length)];
+const QUESTION = QUESTION_OBJ.question;
+const ANSWER = QUESTION_OBJ.answer.toUpperCase();
+const ANSWER_LENGTH = ANSWER.length;
+
+document.querySelector(".question").innerHTML = QUESTION;
 
 function isLetter(letter) {
   return /^[a-zA-Z]$/.test(letter);
@@ -38,27 +43,36 @@ function mapNumberOfLetters(array) {
   return obj;
 }
 
-function setLoading(isLoading) {
-  loadingDiv.classList.toggle("hidden", !isLoading);
+function createLetterBoxes() {
+  let letterBoard = document.querySelector(".letterboard");
+
+  for (let i = 0; i < ROUNDS; i++) {
+    let newRow = document.createElement("div");
+    newRow.className = "answer-row";
+    newRow.id = "round-" + i;
+    for (let i = 0; i < ANSWER_LENGTH; i++) {
+      let newDiv = document.createElement("div");
+      newDiv.className = "letterboard-letter";
+      newDiv.id =
+        "letter-" + (ANSWER_LENGTH * ROUNDS - (ANSWER_LENGTH * ROUNDS - i));
+      newRow.appendChild(newDiv);
+    }
+
+    letterBoard.appendChild(newRow);
+  }
 }
 
 async function init() {
   let currentGuess = "";
   let currentRow = 0;
   let gameFinished = false;
-  let isLoading = true;
-  setLoading(isLoading);
 
-  // GET word
-  const res = await getQuestionObj();
-  console.log(res);
-  const word = res.answer.toUpperCase();
-  const question = res.question;
+  //Create answer boxes depending o word length
+  createLetterBoxes();
+  let letters = document.querySelectorAll(".letterboard-letter");
+
+  const word = ANSWER;
   const wordLetters = word.split("");
-  isLoading = false;
-  setLoading(isLoading);
-
-  document.querySelector(".question").innerHTML = question;
 
   function markInvalidWord(_shake) {
     let applyShake = _shake || false;
@@ -155,7 +169,7 @@ async function init() {
   }
 
   document.addEventListener("keydown", function handleKeyPress(event) {
-    if (gameFinished || isLoading) return;
+    if (gameFinished) return;
 
     const action = event.key;
 
