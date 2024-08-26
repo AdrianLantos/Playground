@@ -49,6 +49,7 @@ function createKeyboard() {
         newKey.innerHTML = charValue;
         newKey.id = "key-" + charValue;
         newKey.className = "keyboard-key";
+        newKey.setAttribute("unselectable", "on");
         newKeyRow.appendChild(newKey);
       } else if (i === 2 && j >= 6) {
         let newKey = document.createElement("div");
@@ -56,6 +57,7 @@ function createKeyboard() {
         newKey.innerHTML = charValue;
         newKey.id = "key-" + charValue;
         newKey.className = "keyboard-key";
+        newKey.setAttribute("unselectable", "on");
         newKeyRow.appendChild(newKey);
         break;
       }
@@ -71,6 +73,7 @@ function createKeyboard() {
       newKey.innerHTML = charValue;
       newKey.id = "key-" + charValue;
       newKey.className = "keyboard-key";
+      newKey.setAttribute("unselectable", "on");
       newKeyRow.appendChild(newKey);
     }
     keyboard.appendChild(newKeyRow);
@@ -80,6 +83,5 @@ function createKeyboard() {
 // Sets the question and the number of boxes
 export function gameSetUp(question, answer, rounds) {
   document.querySelector(".question").innerHTML = question;
-  createKeyboard();
   createLetterBoxes(answer, rounds);
 }
